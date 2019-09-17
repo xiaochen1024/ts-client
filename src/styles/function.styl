@@ -1,0 +1,127 @@
+@import './color.styl'
+
+
+// 布局工具
+centerWithFlex()
+  display: flex
+  justify-content: center
+  align-items: center
+
+centerWithFlexAlign()
+  display: flex
+  align-items: center
+
+centerWithLineHeight(height)
+  text-align: center
+  line-height: height
+
+// 基础组件工具
+
+hover(color)
+  cursor: pointer
+  &:hover
+    background-color: color
+
+setSize(width, height)
+  width: width
+  height: height
+
+setFont(family, size, lineHeight)
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: size
+  line-height: lineHeight
+
+bigTitle()
+  font-size 38px
+  font-weight 500
+  line-height 1.12
+  color themeBlack
+  margin 80px 0 10px 0
+  cursor default
+  setFont(SFUIText-Medium, 38px, 1.12)
+button(width)
+  width width
+  height 32px
+  border-radius 4px
+  background-color aliOrange
+  border-color aliOrange
+
+  &:hover
+    border-color aliOrange
+    background-color rgba(255,117,0, 0.8)
+
+  &:focus
+    border-color aliOrange
+    background-color aliOrange
+    color white
+  &[disabled]
+    background-color disabledOrgBg
+    color white
+    border none
+
+  &[disabled]:hover
+    background-color disabledOrgBg
+    color white
+    border none
+
+input()
+  &:hover
+    border-color aliOrange
+
+  &:focus
+    border-color aliOrange
+    box-shadow 0 0 0 2px themeBoxShadow
+
+// 清除浮动工具
+clearFix()
+  content ' '
+  display block
+  clear both
+  height 0
+  visibility hidden
+// 省略工具
+textOverflow()
+  white-space: nowrap
+  overflow: hidden
+  text-overflow: ellipsis
+
+// 其它
+getTag(bgColor, fontColor, borderColor)
+  background-color: bgColor
+  border: 1px solid borderColor
+  span
+    color: fontColor
+
+tips()
+  font-size 16px
+  color themeGray
+  margin-bottom 52px
+  cursor default
+  setFont(SFUIText-Regular, 16px, 1.5)
+
+name()
+  color themeBlack
+  font-weight 500
+  margin-bottom 10px
+  setFont(SFUIText-Medium, 14px, 1.12)
+  cursor default
+
+// 动画
+open()
+  animation rotate 0.5s forwards
+
+@keyframes rotate
+  0%
+    transform rotate(0)
+
+  100%
+    transform rotate(180deg)
+
+close()
+  animation rotateClose 0.5s forwards
+
+@keyframes rotateClose
+  0%
+    transform rotate(180deg)
+  100%
+    transform rotate(0deg)

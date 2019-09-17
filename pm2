@@ -1,0 +1,12 @@
+[
+    {
+      "name": "",
+      "script": "./staticServer.js",
+      "exec_mode": "cluster_mode",
+      "instances": 2,
+      "env": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+  
