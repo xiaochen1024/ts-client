@@ -9,8 +9,8 @@ const stylModuleRegex = /\.module\.styl$/
 
 module.exports = {
   webpack: (config, env) => {
-    config.devtool =
-      config.mode === 'development' ? 'cheap-module-source-map' : false
+    const sourceMap = env === 'development'
+    config.devtool = sourceMap ? 'cheap-module-source-map' : false
     if (process.env.BUNDLE_VISUALIZE) {
       config.plugins.push(new BundleAnalyzerPlugin())
     }
@@ -22,7 +22,22 @@ module.exports = {
             {
               test: stylRegex,
               exclude: stylModuleRegex,
-              loader: 'style-loader!css-loader!postcss-loader!stylus-loader',
+              use: [
+                'style-loader',
+                {
+                  loader: 'css-loader',
+                  options: {
+                    localIdentName: '[local]--[hash:base64:5]',
+                  },
+                },
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap,
+                  },
+                },
+                'stylus-loader',
+              ],
             },
             {
               test: stylModuleRegex,
@@ -35,7 +50,12 @@ module.exports = {
                     localIdentName: '[local]--[hash:base64:5]',
                   },
                 },
-                'postcss-loader',
+                {
+                  loader: 'postcss-loader',
+                  options: {
+                    sourceMap,
+                  },
+                },
                 'stylus-loader',
               ],
             },
