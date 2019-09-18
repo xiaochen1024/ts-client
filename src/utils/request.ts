@@ -1,24 +1,31 @@
 import axios from 'axios'
-import {
-  Toast,
-} from '@teambition/clarity-design'
+import { Toast } from '@teambition/clarity-design'
 import queryString from 'query-string'
 
-import storage from './storage'
+import storage from 'src/utils/storage'
 import { LOGIN_INFO } from '../constants'
 
 axios.defaults.timeout = 5000
-axios.defaults.baseURL = process.env.REACT_APP_API_URL
-axios.defaults.headers.common.Accept = 'application/json'
-axios.defaults.headers.post['Content-Type'] =
-  'application/x-www-form-urlencoded'
+
+const agent = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  withCredentials: true,
+  headers: {
+    common: {
+      Accept: 'application/json',
+      post: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    },
+  },
+})
 
 function normalizeContentyType(headers: { 'Content-Type': string }) {
   const contentType = headers && headers['Content-Type']
   return contentType || 'application/x-www-form-urlencoded'
 }
 
-axios.interceptors.request.use(
+agent.interceptors.request.use(
   config => {
     const loginInfo = JSON.parse(storage.getItem(LOGIN_INFO)) || {}
     const token = loginInfo.token
@@ -32,12 +39,12 @@ axios.interceptors.request.use(
   error => Promise.reject(error)
 )
 
-axios.interceptors.response.use(
+agent.interceptors.response.use(
   response => {
     const { code, msg } = response.data
     if (code !== 0) {
       Toast.error({
-        message: msg
+        message: msg,
       })
       if (code === 5002) {
         window.location.href = '/login'
@@ -52,7 +59,7 @@ axios.interceptors.response.use(
     if (error.response && error.request) {
       if (error.response.status === 504) {
         Toast.error({
-          message: '连接超时'
+          message: '连接超时',
         })
       }
       Promise.reject(error)
@@ -61,7 +68,7 @@ axios.interceptors.response.use(
 )
 
 export function get(url: string, params?: object) {
-  return axios.get(url, { params })
+  return agent.get(url, { params })
 }
 
 export function post(
@@ -72,7 +79,6 @@ export function post(
   config = Object.assign({}, config)
   const contentType = normalizeContentyType(config.headers)
   let p = ''
-  // const u: string = ''
   switch (contentType) {
     case 'application/x-www-form-urlencoded':
       p = queryString.stringify(params)
@@ -84,7 +90,7 @@ export function post(
       break
   }
 
-  return axios.post(url, p, config)
+  return agent.post(url, p, config)
 }
 
 export function put(
@@ -93,5 +99,5 @@ export function put(
   config?: { headers: { 'Content-Type': string } }
 ) {
   config = Object.assign({}, config)
-  return axios.put(url, queryString.stringify(params), config)
+  return agent.put(url, queryString.stringify(params), config)
 }

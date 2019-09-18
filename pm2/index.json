@@ -1,7 +1,7 @@
 [
     {
       "name": "",
-      "script": "./staticServer.js",
+      "script": "./server.js",
       "exec_mode": "cluster_mode",
       "instances": 2,
       "env": {
