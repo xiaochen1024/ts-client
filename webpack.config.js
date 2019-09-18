@@ -83,16 +83,14 @@ module.exports = {
             {
               test: /\.less$/,
               use: [
-                'style-loader',
                 {
-                  loader: 'css-loader',
-                  options: {
-                    modules: true,
-                    localIdentName: '[local]--[hash:base64:5]',
-                  },
+                  loader: 'style-loader',
                 },
                 {
-                  loader: 'less-loader', // compiles Less to CSS
+                  loader: 'css-loader',
+                },
+                {
+                  loader: 'less-loader',
                   options: {
                     modifyVars: {
                       // '@primary-color': '#faad14'
@@ -100,7 +98,6 @@ module.exports = {
                     javascriptEnabled: true,
                   },
                 },
-                'postcss-loader',
               ],
             },
             ...rule.oneOf,

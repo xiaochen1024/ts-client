@@ -13,25 +13,28 @@ import 'lib-flexible'
 
 import asyncComponent from './components/AsyncComponent'
 import './styles/index.styl'
-
 import TestStore from './stores/testStore'
+
+if (process.env.REACT_APP_MOCK === '1') {
+  import('./mock/index')
+}
 
 const history = createBrowserHistory()
 const stores = {
-  testStore: new TestStore()
+  testStore: new TestStore(),
 }
 const routes: routeItemType[] = [
   {
     path: '/',
-    component: asyncComponent(() => import('./pages/Home'))
-  }
+    component: asyncComponent(() => import('./pages/Home')),
+  },
 ]
 
 ReactDOM.render(
   // <ConfigProvider locale={zh_CN}>
-    <Provider {...stores}>
-      <Router history={history}>{renderRoutes(routes)}</Router>
-    </Provider>,
+  <Provider {...stores}>
+    <Router history={history}>{renderRoutes(routes)}</Router>
+  </Provider>,
   // </ConfigProvider>,
   document.getElementById('root')
 )

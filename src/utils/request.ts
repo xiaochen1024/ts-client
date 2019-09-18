@@ -27,7 +27,7 @@ function normalizeContentyType(headers: { 'Content-Type': string }) {
 
 agent.interceptors.request.use(
   config => {
-    const loginInfo = JSON.parse(storage.getItem(LOGIN_INFO)) || {}
+    const loginInfo = JSON.parse(storage.getItem(LOGIN_INFO) || '{}')
     const token = loginInfo.token
     if (token) {
       config.headers.token = `${token}`
@@ -41,17 +41,17 @@ agent.interceptors.request.use(
 
 agent.interceptors.response.use(
   response => {
-    const { code, msg } = response.data
-    if (code !== 0) {
-      Toast.error({
-        message: msg,
-      })
-      if (code === 5002) {
-        window.location.href = '/login'
-        return
-      }
-      return Promise.reject(response.data)
-    }
+    // const { code, msg } = response.data
+    // if (code !== 0) {
+    //   Toast.error({
+    //     message: msg,
+    //   })
+    //   if (code === 5002) {
+    //     window.location.href = '/login'
+    //     return
+    //   }
+    //   return Promise.reject(response.data)
+    // }
 
     return response.data
   },
