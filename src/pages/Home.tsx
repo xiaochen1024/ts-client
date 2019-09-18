@@ -4,6 +4,7 @@ import { renderRoutes } from 'react-router-config'
 import { Button, Card } from '@teambition/clarity-design'
 
 import { ITestStore } from '../stores/testStore'
+import styles from './Home.module.styl'
 
 interface Props {
   testStore: ITestStore
@@ -11,7 +12,7 @@ interface Props {
 }
 
 @inject((stores: Props) => ({
-  testStore: stores.testStore
+  testStore: stores.testStore,
 }))
 @observer
 class Home extends Component<Props> {
@@ -29,7 +30,10 @@ class Home extends Component<Props> {
         >
           {121}
         </Card>
-        <Button onClick={testStore.add}>add</Button>
+        <Button onClick={testStore.add}>
+          add
+        </Button>
+        <div className={styles.aa}>aa</div>
         <div>{renderRoutes(route.routes)}</div>
       </div>
     )

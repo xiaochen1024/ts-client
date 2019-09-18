@@ -9,6 +9,7 @@ import { Provider } from 'mobx-react'
 // import { ConfigProvider } from 'antd'
 // import zh_CN from 'antd/lib/locale-provider/zh_CN'
 import 'moment/locale/zh-cn'
+import 'lib-flexible'
 
 import asyncComponent from './components/AsyncComponent'
 import './styles/index.styl'

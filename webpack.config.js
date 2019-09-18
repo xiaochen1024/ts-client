@@ -4,6 +4,9 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
 const cdsTreeshaking = require('@teambition/clarity-design/lib/tree-shaking-plugin')
 const proxyObject = require('./proxy.conf')
 
+const stylRegex = /\.styl$/
+const stylModuleRegex = /\.module\.styl$/
+
 module.exports = {
   webpack: (config, env) => {
     config.devtool =
@@ -17,8 +20,24 @@ module.exports = {
           ...rule,
           oneOf: [
             {
-              test: /\.styl$/,
-              loader: 'style-loader!css-loader!stylus-loader'
+              test: stylRegex,
+              exclude: stylModuleRegex,
+              loader: 'style-loader!css-loader!postcss-loader!stylus-loader',
+            },
+            {
+              test: stylModuleRegex,
+              use: [
+                'style-loader',
+                {
+                  loader: 'css-loader',
+                  options: {
+                    modules: true,
+                    localIdentName: '[local]--[hash:base64:5]',
+                  },
+                },
+                'postcss-loader',
+                'stylus-loader',
+              ],
             },
             {
               test: /\.(jsx|tsx|js|ts)$/,
@@ -31,24 +50,26 @@ module.exports = {
                     tsImportPluginFactory({
                       libraryName: 'antd',
                       libraryDirectory: 'lib',
-                      style: true
+                      style: true,
                     }),
-                  ]
+                  ],
                 }),
                 compilerOptions: {
-                  module: 'es2015'
-                }
+                  module: 'es2015',
+                },
               },
-              exclude: /node_modules/
+              exclude: /node_modules/,
             },
             {
               test: /\.less$/,
               use: [
+                'style-loader',
                 {
-                  loader: 'style-loader'
-                },
-                {
-                  loader: 'css-loader' // translates CSS into CommonJS
+                  loader: 'css-loader',
+                  options: {
+                    modules: true,
+                    localIdentName: '[local]--[hash:base64:5]',
+                  },
                 },
                 {
                   loader: 'less-loader', // compiles Less to CSS
@@ -56,13 +77,14 @@ module.exports = {
                     modifyVars: {
                       // '@primary-color': '#faad14'
                     },
-                    javascriptEnabled: true
-                  }
-                }
-              ]
+                    javascriptEnabled: true,
+                  },
+                },
+                'postcss-loader',
+              ],
             },
-            ...rule.oneOf
-          ]
+            ...rule.oneOf,
+          ],
         }
       }
       return rule
@@ -76,12 +98,12 @@ module.exports = {
         const config = configFunction(
           {
             ...proxy,
-            ...proxyObject
+            ...proxyObject,
           },
           allowedHost
         )
         return config
       }
     }
-  }
+  },
 }
