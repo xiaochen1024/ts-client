@@ -1,6 +1,7 @@
 const tsImportPluginFactory = require('ts-import-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
+// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const cdsTreeshaking = require('@teambition/clarity-design/lib/tree-shaking-plugin')
 const proxyObject = require('./proxy.conf')
 
@@ -9,11 +10,65 @@ const stylModuleRegex = /\.module\.styl$/
 
 module.exports = {
   webpack: (config, env) => {
-    const sourceMap = env === 'development'
-    config.devtool = sourceMap ? 'cheap-module-source-map' : false
+    const isEnvDevelopment = env === 'development'
+    const isEnvProduction = env === 'production'
+    const publicPath = require('react-scripts/config/paths').servedPath
+    const shouldUseRelativeAssetPaths = publicPath === './'
+    const shouldUseSourceMap =
+      isEnvProduction && process.env.GENERATE_SOURCEMAP !== 'false'
+
+    const getStyleLoaders = (cssOptions, preProcessor, loaderOptions) => {
+      const loaders = [
+        require.resolve('style-loader'),
+        // isEnvDevelopment && require.resolve('style-loader'),
+        // isEnvProduction && {
+        //   loader: MiniCssExtractPlugin.loader,
+        //   options: Object.assign(
+        //     {},
+        //     shouldUseRelativeAssetPaths ? { publicPath: '../../' } : {}
+        //   ),
+        // },
+        {
+          loader: require.resolve('css-loader'),
+          options: {
+            sourceMap: shouldUseSourceMap,
+            ...cssOptions,
+          },
+        },
+        {
+          loader: require.resolve('postcss-loader'),
+          options: {
+            // ident: 'postcss',
+            // plugins: () => [
+            //   require('postcss-flexbugs-fixes'),
+            //   require('postcss-preset-env')({
+            //     autoprefixer: {
+            //       flexbox: 'no-2009',
+            //     },
+            //     stage: 3,
+            //   }),
+            // ],
+            sourceMap: shouldUseSourceMap,
+          },
+        },
+      ].filter(Boolean)
+      if (preProcessor) {
+        loaders.push({
+          loader: require.resolve(preProcessor),
+          options: {
+            sourceMap: shouldUseSourceMap,
+            ...loaderOptions,
+          },
+        })
+      }
+      return loaders
+    }
+
+    config.devtool = shouldUseSourceMap ? 'cheap-module-source-map' : false
     if (process.env.BUNDLE_VISUALIZE) {
       config.plugins.push(new BundleAnalyzerPlugin())
     }
+
     config.module.rules = config.module.rules.map(rule => {
       if (rule.oneOf instanceof Array) {
         return {
@@ -22,42 +77,24 @@ module.exports = {
             {
               test: stylRegex,
               exclude: stylModuleRegex,
-              use: [
-                'style-loader',
+              use: getStyleLoaders(
                 {
-                  loader: 'css-loader',
-                  options: {
-                    localIdentName: '[local]--[hash:base64:5]',
-                  },
+                  importLoaders: 2,
+                  localIdentName: '[local]--[hash:base64:5]',
                 },
-                {
-                  loader: 'postcss-loader',
-                  options: {
-                    sourceMap,
-                  },
-                },
-                'stylus-loader',
-              ],
+                'stylus-loader'
+              ),
             },
             {
               test: stylModuleRegex,
-              use: [
-                'style-loader',
+              use: getStyleLoaders(
                 {
-                  loader: 'css-loader',
-                  options: {
-                    modules: true,
-                    localIdentName: '[local]--[hash:base64:5]',
-                  },
+                  importLoaders: 2,
+                  modules: true,
+                  localIdentName: '[local]--[hash:base64:5]',
                 },
-                {
-                  loader: 'postcss-loader',
-                  options: {
-                    sourceMap,
-                  },
-                },
-                'stylus-loader',
-              ],
+                'stylus-loader'
+              ),
             },
             {
               test: /\.(jsx|tsx|js|ts)$/,
@@ -82,23 +119,19 @@ module.exports = {
             },
             {
               test: /\.less$/,
-              use: [
+              use: getStyleLoaders(
                 {
-                  loader: 'style-loader',
+                  importLoaders: 2,
+                  localIdentName: '[local]--[hash:base64:5]',
                 },
+                'less-loader',
                 {
-                  loader: 'css-loader',
-                },
-                {
-                  loader: 'less-loader',
-                  options: {
-                    modifyVars: {
-                      // '@primary-color': '#faad14'
-                    },
-                    javascriptEnabled: true,
+                  modifyVars: {
+                    // '@primary-color': '#faad14'
                   },
-                },
-              ],
+                  javascriptEnabled: true,
+                }
+              ),
             },
             ...rule.oneOf,
           ],
