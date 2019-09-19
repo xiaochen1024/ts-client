@@ -1,7 +1,7 @@
 const tsImportPluginFactory = require('ts-import-plugin')
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin
-// const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const cdsTreeshaking = require('@teambition/clarity-design/lib/tree-shaking-plugin')
 const proxyObject = require('./proxy.conf')
 
@@ -19,15 +19,14 @@ module.exports = {
 
     const getStyleLoaders = (cssOptions, preProcessor, loaderOptions) => {
       const loaders = [
-        require.resolve('style-loader'),
-        // isEnvDevelopment && require.resolve('style-loader'),
-        // isEnvProduction && {
-        //   loader: MiniCssExtractPlugin.loader,
-        //   options: Object.assign(
-        //     {},
-        //     shouldUseRelativeAssetPaths ? { publicPath: '../../' } : {}
-        //   ),
-        // },
+        isEnvDevelopment && require.resolve('style-loader'),
+        isEnvProduction && {
+          loader: MiniCssExtractPlugin.loader,
+          options: Object.assign(
+            {},
+            shouldUseRelativeAssetPaths ? { publicPath: '../../' } : {}
+          ),
+        },
         {
           loader: require.resolve('css-loader'),
           options: {
