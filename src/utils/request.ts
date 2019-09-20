@@ -2,7 +2,7 @@ import axios from 'axios'
 import { Toast } from '@teambition/clarity-design'
 import queryString from 'query-string'
 
-import storage from 'src/utils/storage'
+import storage from 'utils/storage'
 import { LOGIN_INFO } from '../constants'
 
 axios.defaults.timeout = 5000

@@ -13,7 +13,7 @@ import 'lib-flexible'
 
 import asyncComponent from './components/AsyncComponent'
 import './styles/index.styl'
-import TestStore from './stores/testStore'
+import TodoStore from './stores/TodoStore'
 
 if (process.env.REACT_APP_MOCK === '1') {
   import('./mock/index')
@@ -21,7 +21,7 @@ if (process.env.REACT_APP_MOCK === '1') {
 
 const history = createBrowserHistory()
 const stores = {
-  testStore: new TestStore(),
+  todoStore: new TodoStore(),
 }
 const routes: routeItemType[] = [
   {

@@ -1,21 +1,18 @@
 import React, { Component } from 'react'
 import { inject, observer } from 'mobx-react'
 import { renderRoutes } from 'react-router-config'
-import { Button } from '@teambition/clarity-design'
 
-import { ITestStore } from '../stores/testStore'
-import styles from './Home.module.styl'
+import TodoStore from '@/stores/TodoStore'
+import { get } from '@/utils/request'
 
-import { get } from 'src/utils/request'
-// import axios from 'axios'
-
+import TodoList from '@/components/todo/TodoList'
 interface Props {
-  testStore: ITestStore
+  todoStore: TodoStore
   route: { routes: [] }
 }
 
 @inject((stores: Props) => ({
-  testStore: stores.testStore,
+  todoStore: stores.todoStore,
 }))
 @observer
 class Home extends Component<Props> {
@@ -24,21 +21,10 @@ class Home extends Component<Props> {
     console.log(r)
   }
   public render() {
-    const { testStore, route } = this.props
+    const { route, todoStore } = this.props
     return (
       <div className="homePage">
-        <div>{testStore.count}</div>
-        {/* <Card
-          className="card-demo"
-          headerTitle="滕王阁序"
-          headerMenu={<div>11</div>}
-          footer="显示全部"
-          // onClickFooter={'12'}
-        >
-          {121}
-        </Card> */}
-        <Button onClick={testStore.add}>add</Button>
-        <div className={styles.aa}>{process.env.NODE_ENV}</div>
+        <TodoList store={todoStore} />
         <div>{renderRoutes(route.routes)}</div>
       </div>
     )
