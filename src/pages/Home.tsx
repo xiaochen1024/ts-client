@@ -5,7 +5,7 @@ import { renderRoutes } from 'react-router-config'
 import TodoStore from '@/stores/TodoStore'
 import { get } from '@/utils/request'
 
-import TodoList from '@/components/todo/TodoList'
+import TodoList from '@/components/Todo/TodoList'
 interface Props {
   todoStore: TodoStore
   route: { routes: [] }
