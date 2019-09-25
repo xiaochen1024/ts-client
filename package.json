@@ -6,8 +6,6 @@
     "@teambition/clarity-design": "1.15.2",
     "antd": "^3.19.8",
     "axios": "^0.19.0",
-    "commitizen": "^4.0.3",
-    "cz-conventional-changelog": "^3.0.2",
     "delay": "^4.3.0",
     "js-cookie": "^2.2.0",
     "lib-flexible": "^0.3.2",
@@ -23,9 +21,9 @@
     "react-loadable": "^5.5.0",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
-    "react-scripts": "3.1.1",
     "react-transition-group": "^4.1.1",
-    "tb-icons": "^0.2.126"
+    "tb-icons": "^0.2.126",
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",
@@ -40,6 +38,8 @@
     "@types/react-router-dom": "^4.3.4",
     "@types/react-transition-group": "^4.2.2",
     "@types/webpack-env": "^1.13.9",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
     "eslint": "5.6.0",
     "husky": "^3.0.5",
     "less": "^3.10.3",
@@ -48,6 +48,7 @@
     "npm-run-all": "^4.1.5",
     "postcss-pxtorem": "^4.0.1",
     "react-app-rewired": "1.6.2",
+    "react-scripts": "3.1.1",
     "react-scripts-ts": "4.0.8",
     "remove": "^0.1.5",
     "stylint": "^2.0.0",
