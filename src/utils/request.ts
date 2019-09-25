@@ -4,6 +4,9 @@ import queryString from 'query-string'
 
 import storage from 'utils/storage'
 import { LOGIN_INFO } from '../constants'
+import loaderStore from '@/stores/LoaderStore'
+
+let reqCount: number = 0
 
 axios.defaults.timeout = 5000
 
@@ -27,6 +30,9 @@ function normalizeContentyType(headers: { 'Content-Type': string }) {
 
 agent.interceptors.request.use(
   config => {
+    if (reqCount === 0) {
+      loaderStore.loaderStart()
+    }
     const loginInfo = JSON.parse(storage.getItem(LOGIN_INFO) || '{}')
     const token = loginInfo.token
     if (token) {
@@ -34,9 +40,16 @@ agent.interceptors.request.use(
     } else {
       delete config.headers.token
     }
+    reqCount++
     return config
   },
-  error => Promise.reject(error)
+  error => {
+    reqCount--
+    if (reqCount === 0) {
+      loaderStore.loaderEnd()
+    }
+    return Promise.reject(error)
+  },
 )
 
 agent.interceptors.response.use(
@@ -53,18 +66,27 @@ agent.interceptors.response.use(
     //   return Promise.reject(response.data)
     // }
 
+    reqCount--
+    if (reqCount === 0) {
+      loaderStore.loaderEnd()
+    }
+
     return response.data
   },
   error => {
+    reqCount--
+    if (reqCount === 0) {
+      loaderStore.loaderEnd()
+    }
     if (error.response && error.request) {
       if (error.response.status === 504) {
         Toast.error({
           message: '连接超时',
         })
       }
-      Promise.reject(error)
     }
-  }
+    return Promise.reject(error)
+  },
 )
 
 export function get(url: string, params?: object) {
@@ -74,7 +96,7 @@ export function get(url: string, params?: object) {
 export function post(
   params: {},
   url: string,
-  config?: { headers: { 'Content-Type': string } }
+  config?: { headers: { 'Content-Type': string } },
 ) {
   config = Object.assign({}, config)
   const contentType = normalizeContentyType(config.headers)
@@ -96,7 +118,7 @@ export function post(
 export function put(
   params: {},
   url: string,
-  config?: { headers: { 'Content-Type': string } }
+  config?: { headers: { 'Content-Type': string } },
 ) {
   config = Object.assign({}, config)
   return agent.put(url, queryString.stringify(params), config)

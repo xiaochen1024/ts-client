@@ -14,8 +14,9 @@ module.exports = {
     const isEnvProduction = env === 'production'
     const publicPath = require('react-scripts/config/paths').servedPath
     const shouldUseRelativeAssetPaths = publicPath === './'
-    const shouldUseSourceMap =
-      isEnvProduction && process.env.GENERATE_SOURCEMAP !== 'false'
+    // const shouldUseSourceMap =
+    //   isEnvProduction && process.env.GENERATE_SOURCEMAP !== 'false'
+    const shouldUseSourceMap = isEnvDevelopment
 
     const getStyleLoaders = (cssOptions, preProcessor, loaderOptions) => {
       const loaders = [

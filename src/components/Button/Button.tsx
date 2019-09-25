@@ -2,7 +2,7 @@ import * as React from 'react'
 
 export interface IButtonProps {
   children?: React.ReactNode
-  onClick?: (e: any) => void
+  onClick?: () => void
 }
 
 const styles = {
@@ -23,6 +23,6 @@ const Button: React.SFC<IButtonProps> = props => (
 
 Button.defaultProps = {
   children: null,
-  onClick: Function,
+  onClick: () => {},
 }
 export default Button
