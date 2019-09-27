@@ -23,7 +23,8 @@
     "react-router-dom": "^5.0.1",
     "react-transition-group": "^4.1.1",
     "tb-icons": "^0.2.126",
-    "tslib": "^1.10.0"
+    "tslib": "^1.10.0",
+    "jsonschema": "^1.2.4"
   },
   "devDependencies": {
     "@storybook/react": "^5.0.11",
@@ -60,11 +61,12 @@
     "stylus-loader": "^3.0.2",
     "ts-import-plugin": "^1.6.1",
     "typescript": "^3.6.3",
-    "webpack-bundle-analyzer": "^3.4.1"
+    "webpack-bundle-analyzer": "^3.4.1",
+    "typescript-json-schema": "^0.37.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint && yarn lint-styl"
+      "pre-commit": "yarn lint && yarn lint-styl && npm run json && git add"
     }
   },
   "config-overrides-path": "./webpack.config.js",
@@ -78,7 +80,8 @@
     "eject": "react-scripts-ts eject",
     "analyz": "BUNDLE_VISUALIZE=1 npm_config_report=true npm run build",
     "storybook": "start-storybook -p 9009 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "json": "typescript-json-schema ./src/typings/response.d.ts '*' -o ./src/typings/response.json --id=api --required   --strictNullChecks"
   },
   "eslintConfig": {
     "extends": "react-app"

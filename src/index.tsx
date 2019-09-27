@@ -18,41 +18,47 @@ import './styles/index.styl'
 import TodoStore from './stores/TodoStore'
 import loaderStore, { LoaderStore } from '@/stores/LoaderStore'
 
-if (process.env.REACT_APP_MOCK === '1') {
-  import('./mock/index')
-}
-
-const history = createBrowserHistory()
-const stores = {
-  todoStore: new TodoStore(),
-}
-const routes: routeItemType[] = [
-  {
-    path: '/',
-    component: asyncComponent(() => import('./pages/Home')),
-  },
-]
-
-interface IProps {
-  loaderStore: LoaderStore
-}
-@observer
-class App extends Component<IProps> {
-  public render() {
-    return (
-      // <ConfigProvider locale={zh_CN}>
-      <Loading spinning={this.props.loaderStore.loading} color="blue">
-        <Provider {...stores}>
-          <Router history={history}>{renderRoutes(routes)}</Router>
-        </Provider>
-      </Loading>
-      // </ConfigProvider>,
-    )
+function mountApp() {
+  const history = createBrowserHistory()
+  const stores = {
+    todoStore: new TodoStore(),
   }
+  const routes: routeItemType[] = [
+    {
+      path: '/',
+      component: asyncComponent(() => import('./pages/Home')),
+    },
+  ]
+
+  interface IProps {
+    loaderStore: LoaderStore
+  }
+  @observer
+  class App extends Component<IProps> {
+    public render() {
+      return (
+        // <ConfigProvider locale={zh_CN}>
+        <Loading spinning={this.props.loaderStore.loading} color="blue">
+          <Provider {...stores}>
+            <Router history={history}>{renderRoutes(routes)}</Router>
+          </Provider>
+        </Loading>
+        // </ConfigProvider>,
+      )
+    }
+  }
+
+  ReactDOM.render(
+    <App loaderStore={loaderStore} />,
+    document.getElementById('root'),
+  )
+  // registerServiceWorker()
 }
 
-ReactDOM.render(
-  <App loaderStore={loaderStore} />,
-  document.getElementById('root'),
-)
-// registerServiceWorker()
+if (process.env.REACT_APP_MOCK === '1') {
+  import('./mock/index').then(() => {
+    mountApp()
+  })
+} else {
+  mountApp()
+}

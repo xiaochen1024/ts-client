@@ -1,0 +1,25 @@
+{
+    "$id": "api",
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "definitions": {
+        "ApiRes.todos": {
+            "items": {
+                "properties": {
+                    "completed": {
+                        "type": "boolean"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "completed",
+                    "description"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        }
+    }
+}
+

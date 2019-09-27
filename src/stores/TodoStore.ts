@@ -1,9 +1,14 @@
-import { computed, observable } from 'mobx'
+import { computed, action, observable } from 'mobx'
 import TodoTask from './TodoTask'
+import todoApi from '@/api/todoApi'
 
 export class TodoStore {
   @observable public todos: TodoTask[] = []
-  @observable public pendingRequests: number = 0
+
+  @action public async fetchTodo() {
+    const result: any = await todoApi.fetchTodoReq()
+    this.todos = result
+  }
 
   @computed get completedTodosCount(): number {
     return this.todos.filter(todo => todo.completed).length
@@ -20,7 +25,7 @@ export class TodoStore {
     )
   }
 
-  public addTodo(task: string) {
+  @action public addTodo(task: string) {
     this.todos.push(new TodoTask(task))
   }
 }

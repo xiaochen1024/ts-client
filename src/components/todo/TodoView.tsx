@@ -19,7 +19,6 @@ export class TodoView extends React.Component<ITodoViewProps, {}> {
           onChange={this.onToggleCompleted}
         />
         {todo.description}
-        {todo.assignee ? <small>{todo.assignee}</small> : null}
       </li>
     )
   }

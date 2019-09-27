@@ -3,9 +3,9 @@ import { inject, observer } from 'mobx-react'
 import { renderRoutes } from 'react-router-config'
 
 import TodoStore from '@/stores/TodoStore'
-import { get } from '@/utils/request'
 
 import TodoList from '@/components/Todo/TodoList'
+import styles from './Home.module.styl'
 interface Props {
   todoStore: TodoStore
   route: { routes: [] }
@@ -17,13 +17,12 @@ interface Props {
 @observer
 class Home extends Component<Props> {
   public async componentDidMount() {
-    const r = await get(`demo`)
-    console.log(r)
+    this.props.todoStore.fetchTodo()
   }
   public render() {
     const { route, todoStore } = this.props
     return (
-      <div className="homePage">
+      <div className={styles.homePage}>
         <TodoList store={todoStore} />
         <div>{renderRoutes(route.routes)}</div>
       </div>

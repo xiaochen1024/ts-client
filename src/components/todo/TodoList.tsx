@@ -39,7 +39,6 @@ export class TodoList extends React.Component<ITodoListProps, ITodoListState> {
             <TodoView todo={todo} key={idx} />
           ))}
         </ul>
-        {store.pendingRequests > 0 ? <strong>Loading...</strong> : null}
         <small> (double-click a todo to edit)</small>
       </div>
     )

@@ -1,10 +1,17 @@
 import axios from 'axios'
 import { Toast } from '@teambition/clarity-design'
-import queryString from 'query-string'
+// import queryString from 'query-string'
 
 import storage from 'utils/storage'
-import { LOGIN_INFO } from '../constants'
+import { LOGIN_INFO } from '@/constants'
 import loaderStore from '@/stores/LoaderStore'
+
+// export type IApiResponseType<T> = {
+//   success: boolean
+//   result: T
+//   message: string
+//   token: string
+// }
 
 let reqCount: number = 0
 
@@ -22,11 +29,6 @@ const agent = axios.create({
     },
   },
 })
-
-function normalizeContentyType(headers: { 'Content-Type': string }) {
-  const contentType = headers && headers['Content-Type']
-  return contentType || 'application/x-www-form-urlencoded'
-}
 
 agent.interceptors.request.use(
   config => {
@@ -71,7 +73,7 @@ agent.interceptors.response.use(
       loaderStore.loaderEnd()
     }
 
-    return response.data
+    return response
   },
   error => {
     reqCount--
@@ -89,37 +91,4 @@ agent.interceptors.response.use(
   },
 )
 
-export function get(url: string, params?: object) {
-  return agent.get(url, { params })
-}
-
-export function post(
-  params: {},
-  url: string,
-  config?: { headers: { 'Content-Type': string } },
-) {
-  config = Object.assign({}, config)
-  const contentType = normalizeContentyType(config.headers)
-  let p = ''
-  switch (contentType) {
-    case 'application/x-www-form-urlencoded':
-      p = queryString.stringify(params)
-      break
-    case 'application/json':
-      p = JSON.stringify(params)
-      break
-    default:
-      break
-  }
-
-  return agent.post(url, p, config)
-}
-
-export function put(
-  params: {},
-  url: string,
-  config?: { headers: { 'Content-Type': string } },
-) {
-  config = Object.assign({}, config)
-  return agent.put(url, queryString.stringify(params), config)
-}
+export default agent
