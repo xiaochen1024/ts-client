@@ -38,11 +38,13 @@ function mountApp() {
     public render() {
       return (
         // <ConfigProvider locale={zh_CN}>
-        <Loading spinning={this.props.loaderStore.loading} color="blue">
-          <Provider {...stores}>
-            <Router history={history}>{renderRoutes(routes)}</Router>
-          </Provider>
-        </Loading>
+        <div style={{ height: '100vh' }}>
+          <Loading spinning={this.props.loaderStore.loading} color="blue">
+            <Provider {...stores}>
+              <Router history={history}>{renderRoutes(routes)}</Router>
+            </Provider>
+          </Loading>
+        </div>
         // </ConfigProvider>,
       )
     }
