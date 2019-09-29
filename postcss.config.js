@@ -6,7 +6,7 @@ module.exports = {
       propList: ['*', '!font*'],
       selectorBlackList: [],
       minPixelValue: 1,
-      exclude: ['@teambition', 'pages/PC'],
+      exclude: ['@teambition', 'pages/PC', 'components/PC'],
     }),
     require('autoprefixer')(),
   ],
