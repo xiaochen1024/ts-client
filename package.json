@@ -46,6 +46,7 @@
     "@types/react-transition-group": "^4.2.2",
     "@types/storybook__react": "^4.0.1",
     "@types/webpack-env": "^1.13.9",
+    "archiver": "^3.1.1",
     "awesome-typescript-loader": "^5.2.1",
     "commitizen": "^4.0.3",
     "cz-conventional-changelog": "^3.0.2",
@@ -86,7 +87,8 @@
     "analyz": "BUNDLE_VISUALIZE=1 npm_config_report=true npm run build",
     "storybook": "start-storybook -p 9009 -s public",
     "build-storybook": "build-storybook -s public",
-    "json": "typescript-json-schema ./src/typings/response.d.ts '*' -o ./src/typings/response.json --id=api --required   --strictNullChecks"
+    "json": "typescript-json-schema ./src/typings/response.d.ts '*' -o ./src/typings/response.json --id=api --required   --strictNullChecks",
+    "archive": "node tools/archiveReleaseFile.js"
   },
   "eslintConfig": {
     "extends": "react-app"
