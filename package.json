@@ -3,11 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@rematch/core": "^1.2.0",
+    "@rematch/immer": "^1.1.2",
+    "@rematch/select": "^2.0.5",
     "@teambition/clarity-design": "1.15.2",
     "antd": "^3.19.8",
     "axios": "^0.19.0",
     "delay": "^4.3.0",
     "js-cookie": "^2.2.0",
+    "jsonschema": "^1.2.4",
     "lib-flexible": "^0.3.2",
     "lodash": "^4.17.11",
     "mobx": "^5.10.1",
@@ -19,12 +23,13 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-loadable": "^5.5.0",
+    "react-redux": "^7.1.1",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-transition-group": "^4.1.1",
+    "redux-saga": "^1.1.1",
     "tb-icons": "^0.2.126",
-    "tslib": "^1.10.0",
-    "jsonschema": "^1.2.4"
+    "tslib": "^1.10.0"
   },
   "devDependencies": {
     "@storybook/react": "^5.0.11",
@@ -61,8 +66,8 @@
     "stylus-loader": "^3.0.2",
     "ts-import-plugin": "^1.6.1",
     "typescript": "^3.6.3",
-    "webpack-bundle-analyzer": "^3.4.1",
-    "typescript-json-schema": "^0.37.0"
+    "typescript-json-schema": "^0.37.0",
+    "webpack-bundle-analyzer": "^3.4.1"
   },
   "husky": {
     "hooks": {
