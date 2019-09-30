@@ -15,15 +15,14 @@ import { connect } from 'react-redux'
 
 import asyncComponent from './components/AsyncComponent'
 import './styles/index.styl'
-import { store } from './store'
-import { IRootState } from '@/store'
+import { store, IRootState } from './store'
 
 function mountApp() {
   const history = createBrowserHistory()
   const routes: routeItemType[] = [
     {
       path: '/',
-      component: asyncComponent(() => import('./pages/PC/Rematch_Todo')),
+      component: asyncComponent(() => import('./pages/Rematch_Home')),
     },
   ]
 

@@ -4,7 +4,7 @@ import { renderRoutes } from 'react-router-config'
 
 import TodoStore from '@/stores/TodoStore'
 
-import TodoList from '@/components/PC/B_Todo/TodoList'
+import TodoList from '@/components/B_Todo/TodoList'
 import styles from './Home.module.styl'
 interface Props {
   todoStore: TodoStore
