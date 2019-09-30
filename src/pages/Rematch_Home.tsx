@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 
 import { IRootState, Dispatch, select } from '@/store'
 import { TTodoItem } from '@/models/todo'
-import styles from './Rematch_Todo.module.styl'
+import styles from './Rematch_Home.module.styl'
 import { Button } from '@teambition/clarity-design'
 
 interface IAddprops {

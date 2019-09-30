@@ -26,7 +26,7 @@ function mountApp() {
   const routes: routeItemType[] = [
     {
       path: '/',
-      component: asyncComponent(() => import('./pages/PC/Home')),
+      component: asyncComponent(() => import('./pages/Home')),
     },
   ]
 
