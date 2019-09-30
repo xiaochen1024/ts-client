@@ -1,0 +1,112 @@
+{
+  "name": "<%= appName %>",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@rematch/core": "^1.2.0",
+    "@rematch/immer": "^1.1.2",
+    "@rematch/select": "^2.0.5",
+    "@teambition/clarity-design": "1.15.2",
+    "antd": "^3.19.8",
+    "axios": "^0.19.0",
+    "delay": "^4.3.0",
+    "js-cookie": "^2.2.0",
+    "jsonschema": "^1.2.4",
+    "lib-flexible": "^0.3.2",
+    "lodash": "^4.17.11",
+    "moment": "^2.24.0",
+    "query-string": "^6.8.3",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-loadable": "^5.5.0",
+    "react-redux": "^7.1.1",
+    "react-router-config": "^5.0.1",
+    "react-router-dom": "^5.0.1",
+    "react-transition-group": "^4.1.1",
+    "redux-saga": "^1.1.1",
+    "tb-icons": "^0.2.126",
+    "tslib": "^1.10.0"
+  },
+  "devDependencies": {
+    "@storybook/react": "^5.0.11",
+    "@types/jest": "^24.0.15",
+    "@types/js-cookie": "^2.2.2",
+    "@types/lodash": "^4.14.135",
+    "@types/node": "^12.0.10",
+    "@types/react": "^16.8.22",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-loadable": "^5.5.1",
+    "@types/react-router": "^5.0.2",
+    "@types/react-router-config": "^5.0.0",
+    "@types/react-router-dom": "^4.3.4",
+    "@types/react-transition-group": "^4.2.2",
+    "@types/storybook__react": "^4.0.1",
+    "@types/webpack-env": "^1.13.9",
+    "archiver": "^3.1.1",
+    "awesome-typescript-loader": "^5.2.1",
+    "commitizen": "^4.0.3",
+    "cz-conventional-changelog": "^3.0.2",
+    "eslint": "5.6.0",
+    "husky": "^3.0.5",
+    "less": "^3.10.3",
+    "less-loader": "^5.0.0",
+    "mockjs": "^1.0.1-beta3",
+    "npm-run-all": "^4.1.5",
+    "postcss-pxtorem": "^4.0.1",
+    "react-app-rewired": "1.6.2",
+    "react-docgen-typescript-loader": "^3.1.0",
+    "react-scripts": "3.1.2",
+    "react-scripts-ts": "4.0.8",
+    "remove": "^0.1.5",
+    "stylint": "^2.0.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "ts-import-plugin": "^1.6.1",
+    "typescript": "^3.6.3",
+    "typescript-json-schema": "^0.37.0",
+    "webpack-bundle-analyzer": "^3.4.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint && yarn lint-styl && npm run json && git add"
+    }
+  },
+  "config-overrides-path": "./webpack.config.js",
+  "scripts": {
+    "lint-styl": "stylint src/styles",
+    "start-ts": "react-app-rewired start --scripts-version react-scripts-ts",
+    "start": "npm-run-all start-ts",
+    "build-ts": "react-app-rewired build --scripts-version react-scripts-ts",
+    "build": "npm-run-all lint build-ts",
+    "lint": "tslint -p tsconfig.json -c tslint.json",
+    "eject": "react-scripts-ts eject",
+    "analyz": "BUNDLE_VISUALIZE=1 npm_config_report=true npm run build",
+    "storybook": "start-storybook -p 9009 -s public",
+    "build-storybook": "build-storybook -s public",
+    "json": "typescript-json-schema ./src/typings/response.d.ts '*' -o ./src/typings/response.json --id=api --required   --strictNullChecks",
+    "archive": "node tools/archiveReleaseFile.js"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      "ie >= 10",
+      "last 10 Chrome version",
+      "last 10 Firefox version",
+      "last 2 Edge version",
+      "Safari >= 8",
+      "last 5 Opera version"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
+}
