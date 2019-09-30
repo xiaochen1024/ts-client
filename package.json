@@ -3,9 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@rematch/core": "^1.2.0",
-    "@rematch/immer": "^1.1.2",
-    "@rematch/select": "^2.0.5",
     "@teambition/clarity-design": "1.15.2",
     "antd": "^3.19.8",
     "axios": "^0.19.0",
@@ -23,11 +20,9 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-loadable": "^5.5.0",
-    "react-redux": "^7.1.1",
     "react-router-config": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-transition-group": "^4.1.1",
-    "redux-saga": "^1.1.1",
     "tb-icons": "^0.2.126",
     "tslib": "^1.10.0"
   },
