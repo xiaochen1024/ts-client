@@ -1,6 +1,6 @@
 [
     {
-      "name": "",
+      "name": "<%= appName %>",
       "script": "./server.js",
       "exec_mode": "cluster_mode",
       "instances": 2,
