@@ -1,4 +1,4 @@
-import axios from './rematch_request'
+import axios from './request'
 import withRespValidator from 'decorators/withRespValidator'
 
 class TodoApi {
