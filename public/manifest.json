@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "<%= appName %>",
+  "name": "<%= appName %>",
   "icons": [
     {
       "src": "favicon.ico",
