@@ -8,7 +8,7 @@
     "@rematch/select": "^2.0.5",
     "@teambition/clarity-design": "1.15.2",
     "antd": "^3.19.8",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "delay": "^4.3.0",
     "js-cookie": "^2.2.0",
     "jsonschema": "^1.2.4",
